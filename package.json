@@ -1,0 +1,23 @@
+{
+  "name": "@meetingpackage/workspace",
+  "packageManager": "yarn@3.5.0",
+  "workspaces": [
+    "src/packages/*",
+    "src/apps/*"
+  ],
+  "scripts": {
+    "api:start": "yarn workspace @meetingpackage/api start:dev"
+  },
+  "devDependencies": {
+    "@types/mdx-js__react": "^1",
+    "@types/prettier": "^2",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^29.0.0",
+    "prettier": "^2.0.0",
+    "typescript": "^5.0.0"
+  }
+}

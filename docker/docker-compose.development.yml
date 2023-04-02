@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: postgres_meetingpackage_container
+    image: postgres:15.2
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: meetingpackage
+    volumes:
+      - meetingpackage_postgres-development-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: always
+
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  meetingpackage_postgres-development-data:
