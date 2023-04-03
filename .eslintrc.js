@@ -17,5 +17,14 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript'
   ],
-  ignorePatterns: ['**/dist/*', '**/build/*', '**/node_modules/*']
+  ignorePatterns: ['**/dist/*', '**/build/*', '**/node_modules/*'],
+  rules: {
+    '@typescript-eslint/quotes': [
+      'error',
+      'single',
+      {
+        avoidEscape: true,
+      },
+    ],
+  }
 };
