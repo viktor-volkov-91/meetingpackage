@@ -1,6 +1,6 @@
 import {Injectable, UnauthorizedException} from '@nestjs/common';
 import {SignInService} from '../../domains/services/signIn.service';
-import {BookerEmail} from '../../domains/entries/booker.entity';
+import {BookerEmail} from '../../domains/entities/booker.entity';
 import {JwtService} from '@nestjs/jwt';
 
 export type SignInResult = {

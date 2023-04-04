@@ -1,4 +1,4 @@
-import {BookingEntity} from '../../../../domains/entries/booking.entity';
+import {BookingEntity} from '../../../../domains/entities/booking.entity';
 import {toBookingDtoPresenterPresenter} from './toBookingDtoPresenter.presenter';
 import {GetBookingsDto} from '../dto/getBookings.dto';
 

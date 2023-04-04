@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {LoadBookingsPort} from '../../domains/ports/out/loadBookings.port';
-import {BookerEmail, BookerEntity} from '../../domains/entries/booker.entity';
-import {BookingEntity} from '../../domains/entries/booking.entity';
-import {VenueEntity} from '../../domains/entries/venue.entity';
+import {BookerEmail, BookerEntity} from '../../domains/entities/booker.entity';
+import {BookingEntity} from '../../domains/entities/booking.entity';
+import {VenueEntity} from '../../domains/entities/venue.entity';
 
 @Injectable()
 export class BookingsAdapterService implements LoadBookingsPort{

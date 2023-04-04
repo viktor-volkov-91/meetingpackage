@@ -2,11 +2,11 @@
   "name": "@meetingpackage/workspace",
   "packageManager": "yarn@3.5.0",
   "workspaces": [
-    "src/packages/*",
-    "src/apps/*"
+    "apps/*"
   ],
   "scripts": {
-    "api:start": "yarn workspace @meetingpackage/api start:dev"
+    "api:start": "yarn workspace @meetingpackage/api start:dev",
+    "api:db:sync": "yarn workspace @meetingpackage/api db:sync"
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1",
