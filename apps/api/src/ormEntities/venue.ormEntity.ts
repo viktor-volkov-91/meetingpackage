@@ -1,9 +1,12 @@
-import {CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from 'typeorm';
 
 @Entity('Venues')
 export class VenueOrmEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Column()
+    name: string
 
     @CreateDateColumn({ type: 'timestamp', nullable: false })
     createdAt: Date;

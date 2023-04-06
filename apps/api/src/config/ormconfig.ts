@@ -1,8 +1,8 @@
 import { join } from 'path';
 
-import {DataSource} from 'typeorm';
+import {DataSource, DataSourceOptions} from 'typeorm';
 
-export default new DataSource({
+export const dataSourceOptions: DataSourceOptions= {
   type: 'postgres',
   host: 'localhost',
   port: 5432,
@@ -10,8 +10,10 @@ export default new DataSource({
   password: 'password',
   database: 'meetingpackage',
   synchronize: false,
-  logging: false,
-  entities: [join(__dirname, '/../orm-entities/*.ormEntity{.ts,.js}')],
+  logging: true,
+  entities: [join(__dirname, '/../ormEntities/*.ormEntity{.ts,.js}')],
   subscribers: [],
-  migrations: [],
-})
+  migrations: []
+}
+
+export default new DataSource(dataSourceOptions);

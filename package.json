@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "api:start": "yarn workspace @meetingpackage/api start:dev",
-    "api:db:sync": "yarn workspace @meetingpackage/api db:sync"
+    "api:db:sync": "yarn workspace @meetingpackage/api db:sync",
+    "api:seed:create": "yarn workspace @meetingpackage/api seed:create"
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1",

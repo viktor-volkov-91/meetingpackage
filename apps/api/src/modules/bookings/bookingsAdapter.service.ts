@@ -1,22 +1,30 @@
 import {Injectable} from '@nestjs/common';
 import {LoadBookingsPort} from '../../domains/ports/out/loadBookings.port';
-import {BookerEmail, BookerEntity} from '../../domains/entities/booker.entity';
+import {BookerEmail} from '../../domains/entities/booker.entity';
 import {BookingEntity} from '../../domains/entities/booking.entity';
-import {VenueEntity} from '../../domains/entities/venue.entity';
+import {InjectRepository} from '@nestjs/typeorm';
+import {BookingOrmEntity} from '../../ormEntities/booking.ormEntity';
+import {Repository} from 'typeorm';
+import {BookingMapper} from './booking.mapper';
 
 @Injectable()
 export class BookingsAdapterService implements LoadBookingsPort{
+
+    constructor(
+        @InjectRepository(BookingOrmEntity)
+        private readonly bookingRepository: Repository<BookingOrmEntity>,
+    ) {
+    }
+
     async loadBookings(bookerEmail: BookerEmail): Promise<BookingEntity[]> {
-        return [
-            new BookingEntity(
-                '1',
-                new BookerEntity(bookerEmail),
-                new VenueEntity('12', 'venue'),
-                new Date(),
-                new Date(),
-                new Date(),
-                1000
-            )
-        ]
+        const result = await this.bookingRepository
+            .createQueryBuilder('booking')
+            .leftJoinAndSelect('booking.customer', 'customer')
+            .leftJoinAndSelect('booking.venue', 'venue')
+            .where({ customer: {email: bookerEmail} })
+            .orderBy('booking.createdAt')
+            .getMany();
+
+        return result.map(BookingMapper.mapToDomain)
     }
 }
