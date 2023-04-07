@@ -37,6 +37,7 @@ const createBooking = ({
     booking.price = Number(faker.finance.amount(1, 10000, 0));
     booking.endedAt = faker.date.recent(100);
     booking.startedAt = faker.date.recent(100, booking.endedAt);
+    booking.createdAt = faker.date.recent(100, booking.startedAt);
 
 
     return booking;

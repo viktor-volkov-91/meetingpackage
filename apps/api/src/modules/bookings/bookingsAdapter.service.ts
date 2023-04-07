@@ -16,13 +16,15 @@ export class BookingsAdapterService implements LoadBookingsPort{
     ) {
     }
 
-    async loadBookings(bookerEmail: BookerEmail): Promise<BookingEntity[]> {
+    async loadBookings(bookerEmail: BookerEmail, page: number): Promise<BookingEntity[]> {
         const result = await this.bookingRepository
             .createQueryBuilder('booking')
             .leftJoinAndSelect('booking.customer', 'customer')
             .leftJoinAndSelect('booking.venue', 'venue')
             .where({ customer: {email: bookerEmail} })
             .orderBy('booking.createdAt')
+            .limit(10)
+            .offset(page * 10)
             .getMany();
 
         return result.map(BookingMapper.mapToDomain)

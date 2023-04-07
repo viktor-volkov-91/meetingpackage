@@ -1,4 +1,4 @@
-import {Controller, Get, UseGuards, Request} from '@nestjs/common';
+import {Controller, Get, UseGuards, Request, Query} from '@nestjs/common';
 import {AuthGuard} from '../../auth/auth.guard';
 import {toGetBookingsDtoPresenter} from './presenters/toGetBookingsDto.presenter';
 import {BookingsAdapterService} from '../../bookings/bookingsAdapter.service';
@@ -11,7 +11,12 @@ export class BookingsController {
 
     @UseGuards(AuthGuard)
     @Get()
-    async getBookings(@Request() {email}: any) {
-        return toGetBookingsDtoPresenter(await this.bookingsAdapterService.loadBookings(email))
+    async getBookings(
+        @Request()
+        {email}: any,
+        @Query('page')
+        page = 1
+    ) {
+        return toGetBookingsDtoPresenter(await this.bookingsAdapterService.loadBookings(email, page))
     }
 }

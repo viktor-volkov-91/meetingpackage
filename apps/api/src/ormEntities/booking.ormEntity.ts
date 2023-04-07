@@ -1,7 +1,7 @@
 import {
     Column,
     CreateDateColumn,
-    Entity,
+    Entity, Index,
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
@@ -11,6 +11,7 @@ import {CustomerOrmEntity} from './customer.ormEntity';
 import {VenueOrmEntity} from './venue.ormEntity';
 
 @Entity('Bookings')
+@Index(['customerId', 'venueId'])
 export class BookingOrmEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -19,14 +20,14 @@ export class BookingOrmEntity {
     @JoinColumn({ name: 'customerId' })
     customer: CustomerOrmEntity;
 
-    @Column({ type: 'uuid' })
+    @Column({ type: 'uuid', nullable: false })
     customerId: string;
 
     @ManyToOne(_ => VenueOrmEntity)
     @JoinColumn({ name: 'venueId' })
     venue: VenueOrmEntity;
 
-    @Column({ type: 'uuid' })
+    @Column({ type: 'uuid', nullable: false })
     venueId: string;
 
     @Column({ type: 'timestamp', nullable: false })

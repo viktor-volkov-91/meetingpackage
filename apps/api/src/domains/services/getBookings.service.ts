@@ -7,7 +7,7 @@ export class GetBookingsService implements GetBookingsQuery {
     constructor(private readonly _loadBookingsPort: LoadBookingsPort) {
     }
 
-    async getBookings(bookerEmail: BookerEmail): Promise<BookingEntity[]> {
-        return this._loadBookingsPort.loadBookings(bookerEmail)
+    async getBookings(bookerEmail: BookerEmail, page: number): Promise<BookingEntity[]> {
+        return this._loadBookingsPort.loadBookings(bookerEmail, page)
     }
 }
