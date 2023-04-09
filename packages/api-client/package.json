@@ -1,5 +1,6 @@
 {
   "name": "@meetingpackage/api-client",
+  "version": "1.0.0",
   "scripts": {
     "generate": "ts-node cli/generate.ts"
   },

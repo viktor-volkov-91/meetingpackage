@@ -17,6 +17,10 @@ export interface SignInResponseDto {
   access_token: string;
 }
 
+export interface MeResponseDto {
+  email: string;
+}
+
 export interface BookingDto {
   email: string;
   /** @format date-time */
@@ -166,6 +170,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: 'POST',
         body: data,
         type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @name Me
+     * @request GET:/api/auth/me
+     */
+    me: (params: RequestParams = {}) =>
+      this.request<MeResponseDto, any>({
+        path: `/api/auth/me`,
+        method: 'GET',
         format: 'json',
         ...params,
       }),

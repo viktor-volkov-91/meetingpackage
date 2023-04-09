@@ -1,5 +1,7 @@
 {
   "name": "@meetingpackage/workspace",
+  "version": "1.0.0",
+  "private": true,
   "packageManager": "yarn@3.5.0",
   "workspaces": [
     "apps/*",
@@ -10,8 +12,9 @@
     "api:db:sync": "yarn workspace @meetingpackage/api db:sync",
     "api:seed:create": "yarn workspace @meetingpackage/api seed:create",
     "api:swagger": "yarn workspace @meetingpackage/api generate-swagger",
+    "client:start": "yarn workspace @meetingpackage/client start",
     "api-client:generate": "yarn workspace @meetingpackage/api-client generate",
-    "generate-api-client": "yarn api:swagger && yarn api-client:generate"
+    "update-api-client": "yarn api:swagger && yarn api-client:generate"
   },
   "devDependencies": {
     "@types/mdx-js__react": "^1",
