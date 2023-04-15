@@ -52,7 +52,7 @@ export const BookingsPage = () => {
         async function load() {
             const result = await apiClient.api.getBookings({page});
             if (!ignore) {
-                setBookings(result.data.bookings);
+                setBookings(bookings => [...bookings, ...result.data.bookings]);
             }
         }
 
@@ -68,10 +68,16 @@ export const BookingsPage = () => {
         setIsAuthorized(true);
     }
 
+    const loadPortion = () => {
+        setPage(page => page + 1);
+    }
+
     return (
         <Box>
             <Auth email={email} onChange={email => setEmail(email)} onSubmit={auth} />
-            <Bookings bookings={bookings} />
+            {bookings.length > 0 && (
+                <Bookings bookings={bookings} onLoadPortion={loadPortion} />
+            )}
         </Box>
     )
 }

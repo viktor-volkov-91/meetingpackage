@@ -1,17 +1,37 @@
 import {BookingDto} from '@meetingpackage/api-client';
 import List from '@mui/material/List';
 import ListItemText from '@mui/material/ListItemText';
-import {Fragment} from 'react';
+import {Fragment, useEffect, useRef} from 'react';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 
 type BookingsProps = {
     bookings: BookingDto[];
+    onLoadPortion: () => void;
 }
 
 const formatDate = (date: string) => new Date(Date.parse(date)).toISOString().slice(0, 10)
 
-export const Bookings = ({bookings}: BookingsProps) => {
+export const Bookings = ({bookings, onLoadPortion}: BookingsProps) => {
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(entries => {
+            const [entry] = entries;
+
+            if (entry.isIntersecting) {
+                onLoadPortion();
+            }
+        }, {
+            threshold: 0.5
+        });
+
+        observer.observe(ref.current as Element);
+        return () => {
+            observer.unobserve(ref.current as Element);
+        }
+    }, []);
+
     return (
         <List>
             {bookings.map(booking => (
@@ -44,6 +64,7 @@ export const Bookings = ({bookings}: BookingsProps) => {
                     />
                 </ListItem>
             ))}
+            <div ref={ref}></div>
         </List>
     )
 }

@@ -22,7 +22,7 @@ export class BookingsAdapterService implements LoadBookingsPort{
             .leftJoinAndSelect('booking.customer', 'customer')
             .leftJoinAndSelect('booking.venue', 'venue')
             .where({ customer: {email: bookerEmail} })
-            .orderBy('booking.createdAt')
+            .orderBy('booking.createdAt', 'DESC')
             .limit(10)
             .offset(page * 10)
             .getMany();
