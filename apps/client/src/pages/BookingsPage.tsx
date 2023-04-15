@@ -1,25 +1,77 @@
 import Box from '@mui/material/Box';
-import {Auth} from "../features/auth/Auth.tsx";
-import {useEffect, useState} from "react";
-import {apiClient} from "../api.ts";
+import {Auth} from '../features/auth/Auth';
+import {useEffect, useState} from 'react';
+import {apiClient} from '../api';
+import {BookingDto} from '@meetingpackage/api-client';
+import {Bookings} from '../features/bookings/Bookings';
 
 export const BookingsPage = () => {
-    const [email, setEmail] = useState<string | null>(null)
+    const [email, setEmail] = useState('');
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [bookings, setBookings] = useState<BookingDto[]>([]);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        apiClient.api.me()
-            .then(result => {
-                setEmail(result.data.email);
-            });
+        if (isAuthorized) {
+            return;
+        }
 
-    }, []);
+        let ignore = false;
+
+        async function load() {
+            setIsAuthorized(false);
+            try {
+                const result = await apiClient.api.me();
+                if (!ignore) {
+                    setEmail(result.data.email);
+                    setIsAuthorized(true);
+                }
+            }
+            catch {
+                if (!ignore) {
+                    setEmail('');
+                }
+            }
+        }
+
+        ignore = false;
+        load();
+
+        return () => {
+            ignore = true;
+        }
+    }, [isAuthorized])
+
+    useEffect(() => {
+        if (!email || !isAuthorized) {
+            return;
+        }
+
+        let ignore = false;
+
+        async function load() {
+            const result = await apiClient.api.getBookings({page});
+            if (!ignore) {
+                setBookings(result.data.bookings);
+            }
+        }
+
+        ignore = false;
+        load();
+
+        return () => {
+            ignore = true;
+        }
+    }, [email, page, isAuthorized])
+
+    const auth = async () => {
+        setIsAuthorized(true);
+    }
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <Auth email={email}/>
-            <Box component="main">
-                TEST
-            </Box>
+        <Box>
+            <Auth email={email} onChange={email => setEmail(email)} onSubmit={auth} />
+            <Bookings bookings={bookings} />
         </Box>
     )
 }

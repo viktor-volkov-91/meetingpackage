@@ -12,7 +12,8 @@
     "api:db:sync": "yarn workspace @meetingpackage/api db:sync",
     "api:seed:create": "yarn workspace @meetingpackage/api seed:create",
     "api:swagger": "yarn workspace @meetingpackage/api generate-swagger",
-    "client:start": "yarn workspace @meetingpackage/client start",
+    "client:start": "yarn workspace @meetingpackage/client dev",
+    "client:typecheck": "yarn workspace @meetingpackage/client typecheck",
     "api-client:generate": "yarn workspace @meetingpackage/api-client generate",
     "update-api-client": "yarn api:swagger && yarn api-client:generate"
   },

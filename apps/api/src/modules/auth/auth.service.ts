@@ -4,7 +4,8 @@ import {BookerEmail} from '../../domains/entities/booker.entity';
 import {JwtService} from '@nestjs/jwt';
 
 export type SignInResult = {
-    access_token: string;
+    accessToken: string;
+    email: string;
 }
 
 @Injectable()
@@ -23,7 +24,8 @@ export class AuthService {
         const payload = {email, sub: email};
 
         return {
-            access_token: await this.jwtService.signAsync(payload),
+            accessToken: await this.jwtService.signAsync(payload),
+            email
         };
     }
 }

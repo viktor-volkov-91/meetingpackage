@@ -1,2 +1,2 @@
 export * from 'axios';
-export * from './api/generated-api.ts';
+export * from './api/generated-api';

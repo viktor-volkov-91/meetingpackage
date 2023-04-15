@@ -2,6 +2,7 @@ import {Controller, Get, UseGuards, Request, Query} from '@nestjs/common';
 import {AuthGuard} from '../../auth/auth.guard';
 import {toGetBookingsResponseDtoPresenter} from './presenters/toGetBookingsDto.presenter';
 import {BookingsAdapterService} from '../../bookings/bookingsAdapter.service';
+import {ApiQuery} from '@nestjs/swagger';
 
 @Controller('/api/bookings')
 export class BookingsController {
@@ -12,6 +13,7 @@ export class BookingsController {
 
     @UseGuards(AuthGuard)
     @Get()
+    @ApiQuery({ name: 'page', type: 'number'})
     async getBookings(
         @Request()
         {email}: any,

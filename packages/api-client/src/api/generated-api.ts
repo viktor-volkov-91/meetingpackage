@@ -14,7 +14,8 @@ export interface SignInRequestDto {
 }
 
 export interface SignInResponseDto {
-  access_token: string;
+  accessToken: string;
+  email: string;
 }
 
 export interface MeResponseDto {
@@ -22,6 +23,7 @@ export interface MeResponseDto {
 }
 
 export interface BookingDto {
+  id: string;
   email: string;
   /** @format date-time */
   createdDate: string;
@@ -194,10 +196,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name GetBookings
      * @request GET:/api/bookings
      */
-    getBookings: (params: RequestParams = {}) =>
+    getBookings: (
+      query: {
+        page: number;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<GetBookingsResponseDto, any>({
         path: `/api/bookings`,
         method: 'GET',
+        query: query,
         format: 'json',
         ...params,
       }),
