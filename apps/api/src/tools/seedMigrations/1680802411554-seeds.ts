@@ -4,10 +4,10 @@ import {faker} from '@faker-js/faker';
 import {VenueOrmEntity} from '../../ormEntities/venue.ormEntity';
 import {BookingOrmEntity} from '../../ormEntities/booking.ormEntity';
 
-const createCustomer = () => {
+const createCustomer = (email?: string) => {
     const customer = new CustomerOrmEntity();
 
-    customer.email = faker.internet.email();
+    customer.email = email ?? faker.internet.email();
 
     return customer;
 }
@@ -43,13 +43,13 @@ const createBooking = ({
     return booking;
 }
 
-function* generator<T>(n: number, fabric: (i: number) => T) {
+function* generator<T>(n: number, fabric: () => T) {
     for (let i = 0; i < n; i++) {
-        yield fabric(i);
+        yield fabric();
     }
 }
 
-function generate<T>(n: number, fabric: (i: number) => T) {
+function generate<T>(n: number, fabric: () => T) {
     const result = [];
 
     for (const value of generator(n, fabric)) {
@@ -63,7 +63,10 @@ export class seeds1680802411554 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         const customerRepository = queryRunner.connection.getRepository(CustomerOrmEntity);
-        const customers = await customerRepository.save(generate(100, createCustomer));
+        const customers = await customerRepository.save([
+            ...generate(1, () => createCustomer('test@test.com')),
+            ...generate(100, createCustomer)
+        ]);
 
         const venueRepository = queryRunner.connection.getRepository(VenueOrmEntity);
         const venues = await venueRepository.save(generate(100, createVenue));
